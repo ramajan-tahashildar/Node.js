@@ -82,16 +82,70 @@ const app = express();
 const PORT = 3000;
 
 // Middleware to parse URL-encoded and JSON request bodies
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // Add this middleware
+
+//custom-middleware
+app.use((req, res, next) => {
+    const time = new Date();
+    console.log("This is your custom middleware-2");
+
+    // Corrected fs.appendFile usage with a proper callback
+    fs.appendFile("./log.txt", time.toString() + "\n", (err) => {
+        if (err) {
+            console.error("❌ Error writing to log file:", err);
+        } else {
+            console.log("✅ Time logged to file");app.use((req, res, next) => {
+                const time = new Date();
+                console.log("This is your custom middleware-2");
+            
+                // Corrected fs.appendFile usage with a proper callback
+                fs.appendFile("./log.txt", time.toString() + "\n", (err) => {
+                    if (err) {
+                        console.error("❌ Error writing to log file:", err);
+                    } else {
+                        console.log("✅ Time logged to file");
+                    }
+                });
+            
+                next(); // Proceed to the next middleware or route handler
+                console.log("Here your custom middleware executed");
+            });
+        }
+    });
+
+    next(); // Proceed to the next middleware or route handler
+    console.log("Here your custom middleware executed");
+});
 
 app.get("/getUsers", (req, res) => {
     return res.json(user);
 });
 
+
+
 app.get("/getUsers/:id", (req, res) => {
     const id = req.params.id;
+    
     const getUserById = user.find((user) => user.id === parseInt(id));
+ if(!getUserById){
+    return res.status(404).json({
+        "message" : "user not found , not valid id"})
+ }
+    //custom-header
+   res.setHeader("X-api-key","custom-api-key")
+
+    const time = new Date();
+    console.log("⏱️ Time:", time.toString());
+
+    fs.appendFile("./log.txt", time.toString() + "\n", (err) => {
+        if (err) {
+            console.error("❌ Error writing to log file:", err);
+        } else {
+            console.log("✅ Time logged to file");
+        }
+    });
+
     if (getUserById) {
         return res.json(getUserById);
     } else {
@@ -139,8 +193,23 @@ app.get("/getUsers/:id", (req, res) => {
 //     });
 // });
 app.post("/addUser", (req, res) => {
-    const newUser = req.body;
-    // console.log("User data", newUser);
+
+    const User = req.body;
+
+    //gen-userID
+    const userId = user.length+1
+    console.log("User data", userId);
+
+    //add userId into the payload using spread operator 
+    const newUser= { id: userId, ...User }
+
+    //validate the inputs
+    if(!newUser.id || !newUser.first_name || !newUser.last_name || !newUser.email || !newUser.gender){
+
+        return res.status(400).json({
+            "message" : "bad request, missing field"
+        })
+    }
 
     // Read the existing data from database.js
     fs.readFile('./database.js', 'utf8', (err, data) => {
@@ -173,8 +242,11 @@ app.post("/addUser", (req, res) => {
                 return res.status(500).send("Error updating database");
             }
 
-            console.log("Updated database:", users);
-            return res.send(newUser);
+            console.log("Updated database:", newUser);
+            return res.status(201).json({
+                message: "New user added",
+                user: newUser
+            });
         });
     });
 });

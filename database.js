@@ -32,32 +32,16 @@ export const user = [
     "job_title": "GIS Technical Architect"
   },
   {
-    "id": 60,
-    "first_name": "Raquel",
-    "last_name": "Ullyott",
-    "email": "rullyott0@scientificamerican.com",
-    "gender": "Agender",
-    "job_title": "Help Desk Technician"
-  },
-  {
-    "id": "2JI21CS032",
-    "first_name": "Ramajan",
-    "last_name": "Tahashildar",
+    "first_name": "swap",
+    "last_name": "Singh",
     "email": "ramajan.t.com",
     "gender": "Male",
-    "job_title": "Help Desk Technician"
+    "job_title": "Help Desk Technician",
+    "id": 5
   },
   {
-    "id": "2JI21CS032",
-    "first_name": "Ramajan",
-    "last_name": "Tahashildar",
-    "email": "ramajan.t.com",
-    "gender": "Male",
-    "job_title": "Help Desk Technician"
-  },
-  {
-    "id": "2JI21CS033",
-    "first_name": "Saker",
+    "id": 6,
+    "first_name": "swap",
     "last_name": "Singh",
     "email": "ramajan.t.com",
     "gender": "Male",
