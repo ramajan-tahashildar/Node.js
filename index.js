@@ -179,6 +179,7 @@ app.post("/addUser", (req, res) => {
     });
 });
 
+
 app.patch("/updateUser/:id",(req,res)=>{
     const id = req.params.id;
     const updatedUser = req.body;
