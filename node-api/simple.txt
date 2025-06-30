@@ -1,0 +1,1 @@
+This is a simple text file created using Node.js. part of the file system module. It demonstrates how to write data to a file synchronously.

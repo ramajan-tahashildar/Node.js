@@ -1,0 +1,1 @@
+This is another simple text file created using Node.js. It also demonstrates how to write data to a file synchronously.
