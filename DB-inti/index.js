@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import student from "./src/model.js";
+import student from "./models/model.js";
 import dotenv from "dotenv";
 dotenv.config();
 
